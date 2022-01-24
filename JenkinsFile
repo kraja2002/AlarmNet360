@@ -9,9 +9,10 @@ stage ('Checkout') {
             steps {
                  git credentialsId: 'userId', url: 'https://github.com/kraja2002/SampleCliApp',branch: 'master'
             }
+    }
 }
 stage('Restore packages'){
-   steps{
+   steps
      {
      bat '"C:\\Program Files\\Nuget.exe" restore SampleCliApp.sin'
      }
