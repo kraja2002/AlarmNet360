@@ -12,7 +12,11 @@ stage ('Checkout') {
 }
 stage('Restore packages'){
    steps{
-      bat "dotnet restore"
+      bat "dotnet restorestage('Restore packages'){
+   steps{
+      bat "C"\\Program Files\\Nuget.exe" restore SampleCliApp.sin"
+     }
+  }
      }
   }
 stage('Clean') {
