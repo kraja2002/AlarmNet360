@@ -3,17 +3,21 @@ agent any
 environment {
  dotnet ='C:\\Program Files (x86)\\dotnet\\'
 }
+ triggers {
+        pollSCM 'H * * * *'
+    }
+    
 stages {
 stage ('Checkout') {
             steps {
                  git credentialsId: 'userId', url: 'https://github.com/kraja2002/SampleCliApp',branch: 'master'
             }
 }
-stage ('Restore PACKAGES') {     
-         steps {
-             bat "dotnet restore --configfile NuGet.Config"
-          }
-        }
+stage('Restore packages'){
+   steps{
+      bat "dotnet restore YourProjectPath\\Your_Project.csproj"
+     }
+  }
 stage('Clean') {
       steps {
             bat 'dotnet clean'
