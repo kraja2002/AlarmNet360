@@ -15,7 +15,7 @@ stage ('Checkout') {
 }
 stage('Restore packages'){
    steps{
-      bat "dotnet restore YourProjectPath\\Your_Project.csproj"
+      bat "dotnet restore"
      }
   }
 stage('Clean') {
