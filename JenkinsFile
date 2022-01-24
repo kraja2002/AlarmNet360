@@ -1,20 +1,42 @@
 pipeline {
-    agent any 
-    stages {
-        stage('Build') {
+agent any
+environment {
+ dotnet ='C:\\Program Files (x86)\\dotnet\\'
+}
+    
+stages {
+stage ('Checkout') {
             steps {
-                echo 'Hello world!' 
+                git credentialsId: '1785f287-8adc-4db2-9894-01b2c773b375', url: 'https://github.com/kraja2002/SampleCliApp.git' 
             }
-        }
-       stage('Deploy') {
-            steps {
-                echo 'Deploy hello!' 
-            }
-        }
-      stage('Test') {
-            steps {
-                echo 'Testing hello!' 
-            }
-        }
     }
+
+stage('Restore packages'){
+   steps
+     {
+     bat '"C:\\Program Files\\Nuget.exe" restore SampleCliApp.sin'
+     }
+   }
+  
+stage('Clean') {
+      steps {
+            bat 'dotnet clean'
+       }
+    }
+stage('Build') {
+     steps {
+            bat 'dotnet build --configuration Release'
+      }
+   }
+stage('Pack') {
+     steps {
+           bat 'dotnet pack --no-build --output nupkgs'
+      }
+   }
+stage('Publish') {
+      steps {
+           bat "dotnet nuget push **\\nupkgs\\*.nupkg -k yourApiKey -s http://myserver/artifactory/api/nuget/nuget-internal-stable/com/sample"
+       }
+   }
+  }
 }
